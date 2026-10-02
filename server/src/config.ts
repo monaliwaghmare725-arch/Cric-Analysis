@@ -3,8 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Prefer triageiq/.env, then server/.env
-dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
+// Prefer repo-root .env, then server/.env
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
@@ -12,7 +11,7 @@ function requireEnv(name: string, fallback?: string): string {
   const value = process.env[name] ?? fallback;
   if (value === undefined || value === '') {
     throw new Error(
-      `Missing required environment variable: ${name}. Copy triageiq/.env.example to triageiq/.env and configure it.`
+      `Missing required environment variable: ${name}. Copy .env.example to .env and configure it.`
     );
   }
   return value;
