@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: triageiq-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: triageiq
+      POSTGRES_PASSWORD: triageiq
+      POSTGRES_DB: triageiq
+    ports:
+      - "5432:5432"
+    volumes:
+      - triageiq_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U triageiq -d triageiq"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  triageiq_pgdata:
